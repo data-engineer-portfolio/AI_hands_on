@@ -106,7 +106,6 @@ answer, context = rag("What does homeowners insurance typically cover?")
 📦 insurance-rag-pipeline
  ┣ 📓 Vector_chromaDB_rag_pipeline.ipynb   # Main notebook
  ┣ 📄 insurance_rag_knowledge_base.txt     # Insurance knowledge base
- ┣ 📁 tmp/chromadb/                        # ChromaDB persistent storage (auto-created)
  ┗ 📄 README.md                            # This file
 ```
 
