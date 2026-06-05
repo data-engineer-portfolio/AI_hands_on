@@ -131,7 +131,7 @@ A high-speed LLM inference platform. This pipeline uses `llama3-8b-8192` for fas
 
 | Parameter | Default | Description |
 |---|---|---|
-| `chunk_size` | `50` | Words per chunk |
+| `chunk_size` | `300` | Words per chunk |
 | `top_k` | `5` | Number of chunks retrieved per query |
 | `EMBEDDING_MODEL` | `all-MiniLM-L6-v2` | Sentence transformer model |
 | `GROQ_MODEL` | `llama3-8b-8192` | Groq LLM model |
@@ -139,9 +139,9 @@ A high-speed LLM inference platform. This pipeline uses `llama3-8b-8192` for fas
 
 ---
 
-## ⚠️ Known Limitations
+## ⚠️ Current Known Limitations
 
-- Chunk size of 50 words is small — sentences may be cut mid-thought. Consider increasing to 150–300 words with overlap for better retrieval.
+- Chunk size of 3000 words  — sentences may be cut mid-thought. Consider increasing to 350–400 words with overlap for better retrieval.
 - No chunk overlap — context at boundaries can be lost.
 - Knowledge base is static — does not update in real time.
 
