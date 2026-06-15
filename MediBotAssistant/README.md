@@ -28,7 +28,52 @@ Login → JWT Token (role-tagged)
 ```
 
 ---
+## 🔄 How It Works
 
+**The Problem:**
+MediAssist hospital has hundreds of PDFs — treatment protocols, billing codes, equipment manuals — scattered everywhere. Staff waste time searching. And anyone can access anything, even confidential documents.
+
+**What MediBot does:**
+An AI chatbot where staff ask questions in plain English and get accurate answers pulled from the right documents — but only the documents they're allowed to see.
+
+---
+
+### Step-by-Step Flow
+
+**1. Login**
+Staff log in with their username. The system tags them with a role — doctor, nurse, billing executive, technician, or admin. A JWT token is issued carrying that role.
+
+**2. Question comes in**
+The question and token hit the `/chat` endpoint. Role is extracted from the token server-side.
+
+**3. Routing decision**
+Is it an analytical question like *"how many claims are pending"*? → routes to **SQL RAG** (queries SQLite database directly). Otherwise → routes to **Hybrid RAG**.
+
+**4. Hybrid RAG**
+Two searches run simultaneously:
+- **Dense search** — semantic/meaning-based (finds conceptually similar content)
+- **BM25 sparse search** — keyword-based (finds exact medical terms, drug names, ICD codes)
+
+Both results are fused together using RRF (Reciprocal Rank Fusion) into a single ranked list.
+
+**5. RBAC Filter**
+Before any chunk is returned, it's checked — does this user's role appear in the chunk's `access_roles` metadata? If not, it's silently dropped. The LLM **never sees restricted content** regardless of how the question is phrased.
+
+**6. Reranking**
+Top 10 retrieved chunks are passed to a cross-encoder reranker. It reads the query and each chunk **together** and scores relevance jointly. Bottom 7 are dropped. Only top 3 go to the LLM.
+
+**7. LLM Answer**
+Groq (llama-3.3-70b-versatile) generates a natural language answer using only those 3 chunks as context. Sources are returned alongside the answer.
+
+**8. Frontend**
+Next.js displays the answer, source citations, retrieval type badge (Hybrid RAG or SQL RAG), and the user's role + accessible collections in the sidebar.
+
+---
+
+### One Line Summary
+> *"A role-aware document Q&A system where access control is enforced at the search layer — restricted content is physically unretrievable, not just hidden."*
+
+---
 ## 👥 User Roles & Access
 
 | Role | Collections Accessible |
