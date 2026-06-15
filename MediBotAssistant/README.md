@@ -123,6 +123,30 @@ RBAC is enforced at the **retrieval layer** — restricted chunks are filtered b
 **Result:** ✅ No clinical chunks returned. Only equipment collection results shown.
 
 ---
+## 📸 Screenshots
+## 👥 Role-Based Access Control Demo
+
+Each role sees only their permitted collections in the sidebar.
+
+### Doctor — Clinical, Nursing, General
+![Doctor](docs/screenshots/doctor_chat.png)
+
+### Nurse — Nursing, General
+![Nurse](docs/screenshots/nurse_rbac_blocked.png)
+
+### Billing Executive — Billing, General
+![Billing](docs/screenshots/billing_sql_rag.png)
+
+### Technician — Equipment, General
+![Technician](docs/screenshots/technician_chat.png)
+
+### Admin — All Collections
+![Admin](docs/screenshots/admin_chat.png)
+
+### RBAC Block — Nurse Trying to Access Billing
+![RBAC Block](docs/screenshots/nurse_billing_blocked.png)
+
+---
 
 ## 📡 API Endpoints
 
