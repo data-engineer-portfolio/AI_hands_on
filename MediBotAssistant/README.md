@@ -103,7 +103,7 @@ cd AI_hands_on/MediBotAssistant
 # 2. Create virtual environment
 py -3.11 -m venv venv
 venv\Scripts\activate  # Windows
-# source venv/bin/activate  # Mac/Linux
+
 
 # 3. Install dependencies
 pip install -r backend/requirements.txt
